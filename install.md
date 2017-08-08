@@ -44,3 +44,19 @@ In order to allow for architectural evolution, NVIDIA GPUs are released in diffe
 Your GPU has Compute Capability 2.0, so you should use sm_20 to enable the compiler to use features not available in older architectures. If you want backward compatibility, you could also target sm_13 (or sm_1x), check out the documents above for how to use the -gencode option to nvcc to target multiple architectures in a single call to nvcc.
 
 Regarding performance, one thing to look out for is that sm_1x did not support IEEE754 floating point, so if you target sm_13 and run on a device with Compute Capability 2.0 or later then you may find that floating point runs faster since it is using the less accurate path. You can also force the less accurate path with sm_20 or later by using the -ftz=true -prec-div=false -prec-sqrt=false options, see section 5.4.1 in the CUDA Programming Guide for more information on this.
+
+
+4. 
+```
+cd faster_rcnn_pytorch
+mkdir data
+cd data
+ln -s $VOCdevkit VOCdevkit2007
+```
+做如下改动， 去掉软连接时的$符号：
+```
+cd faster_rcnn_pytorch
+mkdir data
+cd data
+ln -s VOCdevkit VOCdevkit2007
+```
